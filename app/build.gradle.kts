@@ -1,9 +1,12 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -18,6 +21,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val properties = Properties()
+        val localPropertiesFile = project.rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            properties.load(localPropertiesFile.inputStream())
+        }
+        buildConfigField(
+            "String",
+            "API_KEY",
+            "\"${properties.getProperty("API_KEY") ?: ""}\""
+        )
     }
 
     buildTypes {
@@ -38,6 +52,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -57,6 +72,13 @@ dependencies {
     // Retrofit
     implementation (libs.retrofit)
     implementation (libs.converter.moshi)
+    // Moshi (or Gson if you prefer)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    //gson
+    implementation (libs.gson)
+    //square's gson
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation (libs.logging.interceptor)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
