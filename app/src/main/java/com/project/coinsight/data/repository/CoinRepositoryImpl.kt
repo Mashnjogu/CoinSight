@@ -9,7 +9,7 @@ import jakarta.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-@Singleton
+
 class CoinRepositoryImpl @Inject constructor(
     private val apiService: CoinAPIService
 ): CoinRepository{

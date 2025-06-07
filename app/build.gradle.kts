@@ -69,6 +69,7 @@ dependencies {
     //hilt
     implementation(libs.dagger.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
     // Retrofit
     implementation (libs.retrofit)
     implementation (libs.converter.moshi)
@@ -81,6 +82,12 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation (libs.logging.interceptor)
     testImplementation(libs.junit)
+    //tests for flows
+//    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+//    testImplementation("app.cash.turbine:turbine:1.0.0")
+    testImplementation ("io.mockk:mockk:1.14.0")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+    testImplementation("app.cash.turbine:turbine:1.2.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.project.coinsight.ui.theme.CoinSightTheme
 import com.project.coinsight.BuildConfig
+import com.project.coinsight.presentation.CoinListScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoinSightTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    CoinListScreen(paddingValues = innerPadding)
                 }
             }
         }
