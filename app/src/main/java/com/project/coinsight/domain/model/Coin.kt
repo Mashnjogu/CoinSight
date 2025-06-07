@@ -12,7 +12,7 @@ data class Coin(
     val currentPrice: Double,
     val marketCap: Long,
     val marketCapRank: Int,
-    val totalVolume: Long,
+    val totalVolume: Double,
     val high24h: Double,
     val low24h: Double,
     val priceChange24h: Double,

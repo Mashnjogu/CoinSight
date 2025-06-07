@@ -12,7 +12,7 @@ fun CoinDTO.toCoin(): Coin{
         currentPrice = currentPrice ?: 0.0,
         marketCap = marketCap ?: 0L,
         marketCapRank = marketCapRank ?: 0,
-        totalVolume = totalVolume ?: 0L,
+        totalVolume = totalVolume ?: 0.0,
         high24h = high24h ?: 0.0,
         low24h = low24h ?: 0.0,
         priceChange24h = priceChange24h ?: 0.0,

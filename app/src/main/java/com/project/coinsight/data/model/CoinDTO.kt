@@ -16,7 +16,7 @@ data class CoinDTO(
     @SerializedName("fully_diluted_valuation")
     val fullyDilutedValuation: Long?,
     @SerializedName("total_volume")
-    val totalVolume: Long?,
+    val totalVolume: Double?,
     @SerializedName("high_24h")
     val high24h: Double?,
     @SerializedName("low_24h")

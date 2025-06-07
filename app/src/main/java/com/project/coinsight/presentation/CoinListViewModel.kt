@@ -1,5 +1,6 @@
 package com.project.coinsight.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.coinsight.domain.repository.CoinRepository
@@ -20,13 +21,18 @@ class CoinListViewModel @Inject constructor(
 
     init {
         loadCoins()
+        testApi()
     }
 
+
     private fun loadCoins() {
+
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             try {
                 repository.getTopCoins().collect { coins ->
+                    val coins = coins
+                    Log.d("CoinsViewModel", "The coins list is of size ${coins.size}")
                     _uiState.value = _uiState.value.copy(
                         coins = coins,
                         isLoading = false,
@@ -38,6 +44,22 @@ class CoinListViewModel @Inject constructor(
                     isLoading = false,
                     error = e.message
                 )
+            }
+        }
+    }
+
+    private fun testApi() {
+        viewModelScope.launch {
+            try {
+                Log.d("CoinDebug", "Starting API test...")
+                repository.getTopCoins().collect { coins ->
+                    Log.d("CoinDebug", "✅ API returned ${coins.size} coins")
+                    coins.forEachIndexed { index, coin ->
+                        Log.d("CoinDebug", "[$index] ${coin.name} (${coin.symbol}) - ${coin.currentPrice}")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("CoinDebug", "❌ Error while fetching coins: ${e.message}", e)
             }
         }
     }

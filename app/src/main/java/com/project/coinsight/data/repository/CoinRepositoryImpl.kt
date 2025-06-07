@@ -1,5 +1,6 @@
 package com.project.coinsight.data.repository
 
+import android.util.Log
 import com.project.coinsight.data.api.CoinAPIService
 import com.project.coinsight.data.mapper.toCoin
 import com.project.coinsight.domain.model.Coin
@@ -14,16 +15,15 @@ class CoinRepositoryImpl @Inject constructor(
     private val apiService: CoinAPIService
 ): CoinRepository{
     override suspend fun getTopCoins(): Flow<List<Coin>> = flow{
-        while (true){
-            try {
+
+        Log.d("CoinRepositoryImpl", "Calling API")
                 val coins = apiService.getTopCoins().map { it ->
                     it.toCoin()
                 }
+        Log.d("CoinRepositoryImpl", "API returned ${coins.size} coins")
                 emit(coins)
-            }catch (e: Exception){
-                e.printStackTrace()
-            }
-        }
+
+
     }
 
     override suspend fun getCoinDetails(coinId: String): Coin {
