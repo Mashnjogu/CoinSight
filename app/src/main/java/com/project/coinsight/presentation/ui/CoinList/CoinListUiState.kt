@@ -1,4 +1,4 @@
-package com.project.coinsight.presentation
+package com.project.coinsight.presentation.ui.CoinList
 
 import com.project.coinsight.domain.model.Coin
 

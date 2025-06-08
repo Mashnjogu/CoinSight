@@ -16,12 +16,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.project.coinsight.extras.COIN_DETAIL_ID_KEY
 import com.project.coinsight.extras.CoinAppState
 import com.project.coinsight.extras.Routes
-import com.project.coinsight.presentation.CoinListScreen
+import com.project.coinsight.presentation.ui.CoinDetail.CoinDetailScreen
+import com.project.coinsight.presentation.ui.CoinList.CoinListScreen
 import com.project.coinsight.presentation.utils.snackbar.SnackBarManager
 import kotlinx.coroutines.CoroutineScope
 
@@ -76,7 +80,28 @@ fun resources(): Resources{
 fun NavGraphBuilder.CoinSightGraph(appState: CoinAppState, navController: NavHostController, padding: PaddingValues){
     composable(Routes.HomeScreen.route){
         CoinListScreen(
-            paddingValues = padding
+            paddingValues = padding,
+            onNavigateToCoinDetails = {coinId ->
+                navController.navigate("${Routes.CoinDetail.route}/$coinId")
+            }
         )
+    }
+
+    composable(
+        "${Routes.CoinDetail.route}/{${Routes.CoinDetail.Args.coinId}}",
+        arguments = listOf(
+            navArgument(COIN_DETAIL_ID_KEY){type = NavType.StringType}
+        )
+    ){ backStackEntry ->
+        val coinId = backStackEntry.arguments?.getString(COIN_DETAIL_ID_KEY)
+
+        if (coinId != null){
+            CoinDetailScreen(
+                coinId = coinId,
+                onNavigateToCoinDetails = { coinId ->
+                navController.navigate("${Routes.ShowDetail.route}/$coinId")
+            })
+        }
+
     }
 }

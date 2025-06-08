@@ -1,7 +1,9 @@
 package com.project.coinsight.data.mapper
 
 import com.project.coinsight.data.model.CoinDTO
+import com.project.coinsight.data.model.CoinDetailDTO
 import com.project.coinsight.domain.model.Coin
+import com.project.coinsight.domain.model.CoinDetail
 
 fun CoinDTO.toCoin(): Coin{
     return Coin(
@@ -22,5 +24,22 @@ fun CoinDTO.toCoin(): Coin{
         totalSupply = totalSupply,
         maxSupply = maxSupply,
         lastUpdated = lastUpdated
+    )
+}
+
+fun CoinDetailDTO.toCoinDetail(): CoinDetail {
+    return CoinDetail(
+        id = id,
+        name = name,
+        symbol = symbol,
+        marketCapRank = market_cap_rank,
+        imageUrl = image.large,
+        description = description.en,
+        hashingAlgorithm = hashing_algorithm,
+        homepageUrl = homepage?.firstOrNull { it.isNotBlank() },
+        genesisDate = genesis_date,
+        currentPriceUSD = market_data?.current_price?.get("usd"),
+        marketCapUSD = market_data?.market_cap?.get("usd"),
+        totalVolumeUSD = market_data?.total_volume?.get("usd")
     )
 }

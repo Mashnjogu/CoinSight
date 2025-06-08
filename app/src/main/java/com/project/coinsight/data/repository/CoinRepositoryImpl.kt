@@ -3,7 +3,9 @@ package com.project.coinsight.data.repository
 import android.util.Log
 import com.project.coinsight.data.api.CoinAPIService
 import com.project.coinsight.data.mapper.toCoin
+import com.project.coinsight.data.mapper.toCoinDetail
 import com.project.coinsight.domain.model.Coin
+import com.project.coinsight.domain.model.CoinDetail
 import com.project.coinsight.domain.repository.CoinRepository
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
@@ -26,7 +28,7 @@ class CoinRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun getCoinDetails(coinId: String): Coin {
-        TODO("Not yet implemented")
+    override suspend fun getCoinDetails(coinId: String): CoinDetail {
+        return apiService.getCoinDetails(coinId).toCoinDetail()
     }
 }

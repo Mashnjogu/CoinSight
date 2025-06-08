@@ -14,5 +14,5 @@ sealed class Routes(val route: String){
     }
 }
 
-const val MOVIE_DETAIL_ID_KEY = "movieId"
+const val COIN_DETAIL_ID_KEY = "coinId"
 const val TV_SHOWDETAIL_ID_KEY = "tvShowId"

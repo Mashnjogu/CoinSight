@@ -1,4 +1,4 @@
-package com.project.coinsight.presentation
+package com.project.coinsight.presentation.ui.CoinList
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
