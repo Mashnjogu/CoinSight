@@ -2,6 +2,7 @@ package com.project.coinsight.data.api
 
 import com.project.coinsight.data.model.CoinDTO
 import com.project.coinsight.data.model.CoinDetailDTO
+import com.project.coinsight.data.model.SearchResultDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -28,4 +29,9 @@ interface CoinAPIService {
         @Query("developer_data") developerData: Boolean = false,
         @Query("sparkline") sparkline: Boolean = false
     ): CoinDetailDTO
+
+    @GET("search")
+    suspend fun searchCoins(
+        @Query("query") query: String
+    ): SearchResultDTO
 }

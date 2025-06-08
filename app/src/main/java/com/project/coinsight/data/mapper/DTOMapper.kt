@@ -2,8 +2,10 @@ package com.project.coinsight.data.mapper
 
 import com.project.coinsight.data.model.CoinDTO
 import com.project.coinsight.data.model.CoinDetailDTO
+import com.project.coinsight.data.model.SearchCoinDTO
 import com.project.coinsight.domain.model.Coin
 import com.project.coinsight.domain.model.CoinDetail
+import com.project.coinsight.domain.model.SearchCoin
 
 fun CoinDTO.toCoin(): Coin{
     return Coin(
@@ -43,3 +45,14 @@ fun CoinDetailDTO.toCoinDetail(): CoinDetail {
         totalVolumeUSD = market_data?.total_volume?.get("usd")
     )
 }
+
+fun SearchCoinDTO.toSearchCoin(): SearchCoin {
+    return SearchCoin(
+        id = id,
+        name = name,
+        symbol = symbol.uppercase(),
+        thumb = thumb,
+        marketCapRank = marketCapRank
+    )
+}
+

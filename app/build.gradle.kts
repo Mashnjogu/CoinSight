@@ -87,6 +87,8 @@ dependencies {
     implementation (libs.gson)
     //square's gson
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    //coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation (libs.logging.interceptor)
     testImplementation(libs.junit)
     //tests for flows

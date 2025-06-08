@@ -17,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.coinsight.domain.model.Coin
+import com.project.coinsight.presentation.ui.SearchCoin.SearchCoinViewModel
 
 @Composable
 fun CoinListScreen(
@@ -32,6 +35,11 @@ fun CoinListScreen(
 ){
     val coinListViewModel: CoinListViewModel = hiltViewModel<CoinListViewModel>()
     val state = coinListViewModel.uiState.collectAsState().value
+
+    val searchListViewModel: SearchCoinViewModel = hiltViewModel<SearchCoinViewModel>()
+    val searchState = searchListViewModel.uiState.collectAsState().value
+    val query = remember { mutableStateOf("") }
+
 
 
     Log.d("CoinListScreen", "The coins list is of size ${state.coins.size}")
