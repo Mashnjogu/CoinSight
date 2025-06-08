@@ -3,6 +3,7 @@ package com.project.coinsight.presentation.ui.CoinList
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +27,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.coinsight.domain.model.Coin
+import com.project.coinsight.presentation.ui.SearchCoin.SearchBar
 import com.project.coinsight.presentation.ui.SearchCoin.SearchCoinViewModel
+import com.project.coinsight.presentation.ui.SearchCoin.SearchResultItem
 
 @Composable
 fun CoinListScreen(
@@ -36,8 +39,8 @@ fun CoinListScreen(
     val coinListViewModel: CoinListViewModel = hiltViewModel<CoinListViewModel>()
     val state = coinListViewModel.uiState.collectAsState().value
 
-    val searchListViewModel: SearchCoinViewModel = hiltViewModel<SearchCoinViewModel>()
-    val searchState = searchListViewModel.uiState.collectAsState().value
+    val searchCoinViewModel: SearchCoinViewModel = hiltViewModel<SearchCoinViewModel>()
+    val searchState = searchCoinViewModel.uiState.collectAsState().value
     val query = remember { mutableStateOf("") }
 
 
@@ -45,27 +48,72 @@ fun CoinListScreen(
     Log.d("CoinListScreen", "The coins list is of size ${state.coins.size}")
 
     Box(modifier = Modifier.fillMaxSize()){
-        LazyColumn(modifier = Modifier.fillMaxSize()){
-            items(state.coins){ coin ->
-                CoinListItem(coin = coin, onItemClick = onNavigateToCoinDetails)
+        Column(modifier = Modifier.fillMaxSize()) {
+            SearchBar(
+                query = query.value,
+                onQueryChange = {
+                    query.value = it
+                    searchCoinViewModel.searchCoins(it)
+                },
+                onClear = {
+                    query.value = ""
+                    searchCoinViewModel.clearSearch()
+                },
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxWidth()
+            )
+
+            if (query.value.isNotEmpty()) {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(searchState.searchResults) { coin ->
+                        SearchResultItem(
+                            searchCoin = coin,
+                            onClick = { onNavigateToCoinDetails(coin.id) }
+                        )
+                    }
+                }
+
+                if (searchState.isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                }
+
+                searchState.error?.let {
+                    Text(
+                        text = it,
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    )
+                }
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxSize()){
+                    items(state.coins){ coin ->
+                        CoinListItem(coin = coin, onItemClick = onNavigateToCoinDetails)
+                    }
+                }
+
+                if(state.isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                }
+                state.error?.takeIf { it.isNotBlank() }?.let {
+                    Text(
+                        text = state.error,
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                    )
+                }
+
             }
         }
-        state.error?.takeIf { it.isNotBlank() }?.let {
-            Text(
-                text = state.error,
-                color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .align(Alignment.Center)
-            )
-        }
-        if(state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
-}
+
 
 
 @Composable
