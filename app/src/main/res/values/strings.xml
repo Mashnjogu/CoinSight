@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">CoinSight</string>
+
+    <!-- Common -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="generic_error">Something wrong happened. Please try again.</string>
+    <string name="email_error">Please insert a valid email.</string>
+    <string name="cancel">Cancel</string>
+    <string name="try_again">Try again</string>
+    <string name="save">Save</string>
+    <string name="filmPhoto">FilmPhoto</string>
+    <string name="fav_film">Favorite Film</string>
+
+    <string name="error_connection">Unable to fetch data, please check your internet connection and try again.</string>
+    <string name="error_service">API service is not responding at the moment, please try again later.</string>
+    <string name="error_unknown">Unknown error occurred.</string>
+    <string name="button_retry">RETRY</string>
 </resources>

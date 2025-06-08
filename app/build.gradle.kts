@@ -66,10 +66,17 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    //navigation
+    implementation("androidx.navigation:navigation-compose:2.9.0")
     //hilt
     implementation(libs.dagger.hilt.android)
+//    implementation(libs.androidx.navigation.compose.jvmstubs)
+    implementation(libs.androidx.compose.material3)
     ksp(libs.hilt.android.compiler)
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    //material
+    implementation ("androidx.compose.material3:material3:1.3.2")
+    implementation ("androidx.compose.material3:material3-window-size-class:1.3.2")
     // Retrofit
     implementation (libs.retrofit)
     implementation (libs.converter.moshi)

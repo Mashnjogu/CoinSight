@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.project.coinsight.ui.theme.CoinSightTheme
 import com.project.coinsight.BuildConfig
 import com.project.coinsight.presentation.CoinListScreen
+import com.project.coinsight.presentation.navigation.AppScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoinSightTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CoinListScreen(paddingValues = innerPadding)
+                    AppScreen(paddingValues = innerPadding)
                 }
             }
         }

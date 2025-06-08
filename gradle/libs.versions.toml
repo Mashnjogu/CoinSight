@@ -16,6 +16,8 @@ moshi = "1.15.0"
 moshiKotlin = "1.15.0"
 retrofit = "2.11.0"
 loggingInterceptor = "5.0.0-alpha.14"
+navigationComposeJvmstubs = "2.9.0"
+composeMaterial3 = "1.5.0-beta03"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +42,8 @@ logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", ver
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "navigation-compose-jvmstubs", version.ref = "navigationComposeJvmstubs" }
+androidx-compose-material3 = { group = "androidx.wear.compose", name = "compose-material3", version.ref = "composeMaterial3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
