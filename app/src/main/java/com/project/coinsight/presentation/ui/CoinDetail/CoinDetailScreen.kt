@@ -19,8 +19,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
+import com.project.coinsight.presentation.components.InfoRow
+import com.project.coinsight.presentation.components.MarketInfoItem
+import com.project.coinsight.presentation.components.SectionTitle
 
 @Composable
 fun CoinDetailScreen(
@@ -38,21 +43,63 @@ fun CoinDetailScreen(
         state.coin?.let { coin ->
             LazyColumn(
                 modifier = androidx.compose.ui.Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(20.dp)
+                contentPadding = PaddingValues(20.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                // Header Info
                 item {
-                    Row(
-                        modifier = androidx.compose.ui.Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
+                    Text(
+                        text = "#${coin.marketCapRank} ${coin.name} (${coin.symbol.uppercase()})",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
+
+                // Coin Image
+                item {
+                    androidx.compose.foundation.Image(
+                        painter = rememberAsyncImagePainter(coin.imageUrl),
+                        contentDescription = "${coin.name} Logo",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(120.dp)
+                    )
+                }
+
+                // Description
+                coin.description?.takeIf { it.isNotBlank() }?.let { desc ->
+                    item {
+                        SectionTitle("Description")
                         Text(
-                            text = "${coin.marketCapRank}. ${coin.name} ",
-                            style = MaterialTheme.typography.headlineMedium,
-                            modifier = androidx.compose.ui.Modifier.weight(8f)
+                            text = desc,
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
+                }
 
-                    Spacer(modifier = androidx.compose.ui.Modifier.height(15.dp))
+                // Market Information
+                item {
+                    SectionTitle("Market Data")
+                    MarketInfoItem("Current Price (USD)", coin.currentPriceUSD)
+                    MarketInfoItem("Market Cap (USD)", coin.marketCapUSD)
+                    MarketInfoItem("Total Volume (USD)", coin.totalVolumeUSD)
+                }
+
+                // Technical Information
+                item {
+                    SectionTitle("Technical Details")
+                    InfoRow("Hashing Algorithm", coin.hashingAlgorithm)
+                    InfoRow("Genesis Date", coin.genesisDate)
+                }
+
+                // Homepage Link
+                coin.homepageUrl?.takeIf { it.isNotBlank() }?.let { url ->
+                    item {
+                        SectionTitle("Website")
+                        Text(
+                            text = url,
+                            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.primary)
+                        )
+                    }
                 }
             }
         }
