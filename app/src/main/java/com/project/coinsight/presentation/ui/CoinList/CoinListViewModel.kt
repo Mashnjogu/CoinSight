@@ -25,7 +25,7 @@ class CoinListViewModel @Inject constructor(
     }
 
 
-    private fun loadCoins() {
+    public fun loadCoins() {
 
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)

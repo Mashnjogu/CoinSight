@@ -21,21 +21,28 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.project.coinsight.domain.model.Coin
+import com.project.coinsight.extras.isNetworkAvailable
 import com.project.coinsight.presentation.ui.SearchCoin.SearchBar
 import com.project.coinsight.presentation.ui.SearchCoin.SearchCoinViewModel
 import com.project.coinsight.presentation.ui.SearchCoin.SearchResultItem
@@ -52,12 +59,32 @@ fun CoinListScreen(
     val searchState = searchCoinViewModel.uiState.collectAsState().value
     val query = remember { mutableStateOf("") }
 
+    var isConnected by remember { mutableStateOf(true) }
+    val context = LocalContext.current
 
+    val isRefreshing = state.isLoading
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
+
+    LaunchedEffect(isConnected) {
+        isConnected = context.isNetworkAvailable()
+    }
 
     Log.d("CoinListScreen", "The coins list is of size ${state.coins.size}")
 
     Box(modifier = Modifier.fillMaxSize()){
         Column(modifier = Modifier.fillMaxSize()) {
+
+            if (!isConnected) {
+                Text(
+                    text = "No internet connection. Please turn on your data or connect to Wi-Fi.",
+                    color = Color.Red,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
+
             SearchBar(
                 query = query.value,
                 onQueryChange = {
@@ -73,6 +100,19 @@ fun CoinListScreen(
                     .fillMaxWidth()
             )
 
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = {
+                    // Refresh logic: check connection and refetch
+                    isConnected = context.isNetworkAvailable()
+                    if (isConnected) {
+                        coinListViewModel.loadCoins() // Call your refresh method
+                    }
+                }
+            ) {
+
+
+
             if (query.value.isNotEmpty()) {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(searchState.searchResults) { coin ->
@@ -82,7 +122,6 @@ fun CoinListScreen(
                         )
                     }
                 }
-
                 if (searchState.isLoading) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
                 }
@@ -98,8 +137,8 @@ fun CoinListScreen(
                     )
                 }
             } else {
-                LazyColumn(modifier = Modifier.fillMaxSize()){
-                    items(state.coins){ coin ->
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(state.coins) { coin ->
                         CoinListItem(coin = coin, onItemClick = onNavigateToCoinDetails)
                     }
                 }
@@ -117,8 +156,10 @@ fun CoinListScreen(
                             .padding(horizontal = 20.dp)
                     )
                 }
-
             }
+        }
+
+
         }
         if ((query.value.isNotEmpty() && searchState.isLoading) || (query.value.isEmpty() && state.isLoading)) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))

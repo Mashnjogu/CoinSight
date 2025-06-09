@@ -93,6 +93,8 @@ dependencies {
     testImplementation(libs.junit)
     //charts
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    //swipe to refresh
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.33.2-alpha")
     //tests for flows
 //    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 //    testImplementation("app.cash.turbine:turbine:1.0.0")
