@@ -26,6 +26,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.project.coinsight.presentation.components.InfoRow
 import com.project.coinsight.presentation.components.MarketInfoItem
 import com.project.coinsight.presentation.components.SectionTitle
+import com.project.coinsight.presentation.ui.charts.ChartWithTimeRangeSelector
 import com.project.coinsight.presentation.ui.charts.CoinLineChart
 
 @Composable
@@ -69,7 +70,8 @@ fun CoinDetailScreen(
                 //chart
                 item{
                     SectionTitle("Price Chart")
-                    CoinLineChart(chartData = state.chartData)
+//                    CoinLineChart(chartData = state.chartData)
+                    ChartWithTimeRangeSelector(allChartData = state.chartData)
                 }
 
 

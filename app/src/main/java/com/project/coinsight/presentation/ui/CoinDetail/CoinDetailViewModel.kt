@@ -23,7 +23,7 @@ class CoinDetailViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(isLoading = true)
             try {
                 val coin = repository.getCoinDetails(coinId)
-                val chartData = repository.getMarketChart(coinId, "7")
+                val chartData = repository.getMarketChart(coinId, "30")
 
                 _uiState.value = _uiState.value.copy(
                     coin = coin,
@@ -41,20 +41,7 @@ class CoinDetailViewModel @Inject constructor(
     }
 
 
-    fun updateTimeRange(days: String) {
-        val coinId = _uiState.value.coin?.id ?: return
-        viewModelScope.launch {
-            try {
-                val chartData = repository.getMarketChart(coinId, days)
-                _uiState.value = _uiState.value.copy(
-                    chartData = chartData,
-                    selectedTimeRange = days
-                )
-            } catch (e: Exception) {
-                // Handle error
-            }
-        }
-    }
+
 
 
 }
