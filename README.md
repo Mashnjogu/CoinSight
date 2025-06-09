@@ -1,13 +1,14 @@
 # CoinSight - Crypto Coins Tracker Android App
 
 ### 🔹 Coin List Screen 
-![CoinSight ListScreen](images/CoinListScreen.png)
+
+<img src="images/CoinListScreen.png" alt="CoinSight ListScreen" width="300"/>
 
 ### 🔹 Coin Detail Screen 
-![CoinSight DetailScreen](images/DetailScreen.png)
+<img src="images/DetailScreen.png" alt="CoinSight DetailScreen" width="300"/>
 
 ### 🔹 Coin Search Screen 
-![CoinSight SearchScreen](images/SearchScreen.png)
+<img src="images/SearchScreen.png" alt="CoinSight SearchScreen" width="300"/>
 
 ## App Description
 
@@ -32,6 +33,13 @@ The app leverages the CoinGecko public API for live data and is built using Jetp
    ```bash
    git clone https://github.com/Mashnjogu/CoinSight
    cd CoinSight
+
+## 📲 Live Download Link
+
+You can download the latest release APK from the [Releases](https://github.com/your-username/your-repo-name/releases) section.
+
+👉 **[Download CoinSight APK](https://github.com/Mashnjogu/CoinSight/releases/tag/v1.0)**
+
 
 ## API Usage
 
