@@ -11,6 +11,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.MPPointF
 import com.project.coinsight.domain.model.ChartData
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -41,6 +42,19 @@ fun CoinLineChart(
                     granularity = 1f
                     setDrawGridLines(false)
                 }
+
+                axisLeft.apply {
+                    textColor = Color.BLACK
+                    textSize = 12f
+                    setDrawGridLines(true)
+                }
+
+                val marker = ChartMarkerView(context)
+                marker.setChartView(this) // This is the correct method
+                marker.offset = MPPointF(-marker.width / 2f, -marker.height.toFloat())
+                markerView = marker
+
+
             }
         },
         update = { chart ->
@@ -69,6 +83,7 @@ fun CoinLineChart(
             }
 
             chart.data = LineData(dataSet)
+            chart.animateX(1000)
             chart.invalidate()
         },
         modifier = modifier
