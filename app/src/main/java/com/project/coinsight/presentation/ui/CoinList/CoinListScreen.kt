@@ -62,7 +62,7 @@ fun CoinListScreen(
     var isConnected by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
-    val isRefreshing = state.isLoading
+    val isRefreshing = query.value.isEmpty() && state.isLoading
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
 
     LaunchedEffect(isConnected) {
@@ -161,7 +161,15 @@ fun CoinListScreen(
 
 
         }
-        if ((query.value.isNotEmpty() && searchState.isLoading) || (query.value.isEmpty() && state.isLoading)) {
+//        if ((query.value.isNotEmpty() && searchState.isLoading) || (query.value.isEmpty() && state.isLoading)) {
+//            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+//        }
+
+        if (state.coins.isEmpty() && state.isLoading && query.value.isEmpty()) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
+
+        if (query.value.isNotEmpty() && searchState.isLoading && searchState.searchResults.isEmpty()) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
         }

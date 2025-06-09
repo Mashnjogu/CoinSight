@@ -2,6 +2,7 @@ package com.project.coinsight.presentation.ui.charts
 
 import android.graphics.Color
 import android.view.ViewGroup
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -23,6 +24,11 @@ fun CoinLineChart(
     chartData: List<ChartData>,
     modifier: Modifier = Modifier
 ) {
+    val isDarkTheme = isSystemInDarkTheme()
+    val axisColor = if (isDarkTheme) Color.WHITE else Color.BLACK
+//    var valueTextColor = axisColor
+
+
     AndroidView(
         factory = { context ->
             LineChart(context).apply {
@@ -41,10 +47,13 @@ fun CoinLineChart(
                     position = XAxis.XAxisPosition.BOTTOM
                     granularity = 1f
                     setDrawGridLines(false)
+                    textColor = axisColor
+                    axisLineColor = axisColor
+                    gridColor = axisColor
                 }
 
                 axisLeft.apply {
-                    textColor = Color.BLACK
+                    textColor = axisColor
                     textSize = 12f
                     setDrawGridLines(true)
                 }
@@ -69,7 +78,7 @@ fun CoinLineChart(
 
             val dataSet = LineDataSet(entries, "Price").apply {
                 color = Color.BLUE
-                valueTextColor = Color.BLACK
+                valueTextColor = axisColor
                 setDrawCircles(false)
                 setDrawValues(false)
                 lineWidth = 2f
