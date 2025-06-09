@@ -26,6 +26,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.project.coinsight.presentation.components.InfoRow
 import com.project.coinsight.presentation.components.MarketInfoItem
 import com.project.coinsight.presentation.components.SectionTitle
+import com.project.coinsight.presentation.ui.charts.CoinLineChart
 
 @Composable
 fun CoinDetailScreen(
@@ -64,6 +65,14 @@ fun CoinDetailScreen(
                             .height(120.dp)
                     )
                 }
+
+                //chart
+                item{
+                    SectionTitle("Price Chart")
+                    CoinLineChart(chartData = state.chartData)
+                }
+
+
 
                 // Description
                 coin.description?.takeIf { it.isNotBlank() }?.let { desc ->

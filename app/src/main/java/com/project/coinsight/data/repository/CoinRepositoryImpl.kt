@@ -2,9 +2,11 @@ package com.project.coinsight.data.repository
 
 import android.util.Log
 import com.project.coinsight.data.api.CoinAPIService
+import com.project.coinsight.data.mapper.toChartData
 import com.project.coinsight.data.mapper.toCoin
 import com.project.coinsight.data.mapper.toCoinDetail
 import com.project.coinsight.data.mapper.toSearchCoin
+import com.project.coinsight.domain.model.ChartData
 import com.project.coinsight.domain.model.Coin
 import com.project.coinsight.domain.model.CoinDetail
 import com.project.coinsight.domain.model.SearchCoin
@@ -36,5 +38,9 @@ class CoinRepositoryImpl @Inject constructor(
 
     override suspend fun searchCoin(query: String): List<SearchCoin> {
         return apiService.searchCoins(query).coins.map { it.toSearchCoin() }
+    }
+
+    override suspend fun getMarketChart(coinId: String, days: String): List<ChartData> {
+        return apiService.getMarketChart(coinId, days = days).toChartData()
     }
 }

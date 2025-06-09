@@ -91,6 +91,8 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation (libs.logging.interceptor)
     testImplementation(libs.junit)
+    //charts
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     //tests for flows
 //    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 //    testImplementation("app.cash.turbine:turbine:1.0.0")

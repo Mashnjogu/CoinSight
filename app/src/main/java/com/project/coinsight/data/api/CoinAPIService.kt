@@ -2,6 +2,7 @@ package com.project.coinsight.data.api
 
 import com.project.coinsight.data.model.CoinDTO
 import com.project.coinsight.data.model.CoinDetailDTO
+import com.project.coinsight.data.model.MarketChartDto
 import com.project.coinsight.data.model.SearchResultDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -34,4 +35,11 @@ interface CoinAPIService {
     suspend fun searchCoins(
         @Query("query") query: String
     ): SearchResultDTO
+
+    @GET("coins/{id}/market_chart")
+    suspend fun getMarketChart(
+        @Path("id") coinId: String,
+        @Query("vs_currency") currency: String = "usd",
+        @Query("days") days: String = "7"
+    ): MarketChartDto
 }
