@@ -62,12 +62,25 @@ fun CoinListScreen(
     var isConnected by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
-    val isRefreshing = query.value.isEmpty() && state.isLoading
-    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
+    val isInitialLoading = query.value.isEmpty() && state.isLoading && state.coins.isEmpty()
+    val isRefreshing = query.value.isEmpty() && state.isLoading && state.coins.isNotEmpty()
+
+    val isSearchInitialLoading = query.value.isNotEmpty() && searchState.isLoading && searchState.searchResults.isEmpty()
+    val isSearchRefreshing = query.value.isNotEmpty() && searchState.isLoading && searchState.searchResults.isNotEmpty()
+
+    val swipeRefreshState = rememberSwipeRefreshState(
+        isRefreshing = if (query.value.isEmpty()) isRefreshing else isSearchRefreshing
+    )
 
     LaunchedEffect(isConnected) {
         isConnected = context.isNetworkAvailable()
     }
+
+//    LaunchedEffect(Unit) {
+//        if (context.isNetworkAvailable() && state.coins.isEmpty()) {
+//            coinListViewModel.loadCoins()
+//        }
+//    }
 
     Log.d("CoinListScreen", "The coins list is of size ${state.coins.size}")
 
@@ -103,10 +116,13 @@ fun CoinListScreen(
             SwipeRefresh(
                 state = swipeRefreshState,
                 onRefresh = {
-                    // Refresh logic: check connection and refetch
                     isConnected = context.isNetworkAvailable()
                     if (isConnected) {
-                        coinListViewModel.loadCoins() // Call your refresh method
+                        if (query.value.isEmpty()) {
+                            coinListViewModel.loadCoins()
+                        } else {
+                            searchCoinViewModel.searchCoins(query.value)
+                        }
                     }
                 }
             ) {
@@ -164,37 +180,12 @@ fun CoinListScreen(
 //        if ((query.value.isNotEmpty() && searchState.isLoading) || (query.value.isEmpty() && state.isLoading)) {
 //            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 //        }
-
-        if (state.coins.isEmpty() && state.isLoading && query.value.isEmpty()) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        }
-
-        if (query.value.isNotEmpty() && searchState.isLoading && searchState.searchResults.isEmpty()) {
+        if (isInitialLoading || isSearchInitialLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
         }
     }
 
-
-
-//@Composable
-//fun CoinListItem(coin: Coin, onItemClick: (String) -> Unit) {
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(horizontal = 16.dp, vertical = 8.dp)
-//            .clickable { onItemClick(coin.id) }
-//            .padding(20.dp),
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Text(
-//            text = "${coin.marketCapRank}. ${coin.name} (${coin.symbol})",
-//            style = MaterialTheme.typography.bodyLarge,
-//            overflow = TextOverflow.Ellipsis
-//        )
-//        Spacer(modifier = Modifier.width(8.dp))
-//    }
-//}
 
 @Composable
 fun CoinListItem(coin: Coin, onItemClick: (String) -> Unit) {
