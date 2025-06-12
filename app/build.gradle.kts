@@ -67,16 +67,16 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     //navigation
-    implementation("androidx.navigation:navigation-compose:2.9.0")
+    implementation(libs.androidx.navigation.compose)
     //hilt
     implementation(libs.dagger.hilt.android)
 //    implementation(libs.androidx.navigation.compose.jvmstubs)
     implementation(libs.androidx.compose.material3)
     ksp(libs.hilt.android.compiler)
-    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation (libs.androidx.hilt.navigation.compose)
     //material
-    implementation ("androidx.compose.material3:material3:1.3.2")
-    implementation ("androidx.compose.material3:material3-window-size-class:1.3.2")
+    implementation (libs.material3)
+    implementation (libs.androidx.material3.window.size.class1)
     // Retrofit
     implementation (libs.retrofit)
     implementation (libs.converter.moshi)
@@ -86,21 +86,27 @@ dependencies {
     //gson
     implementation (libs.gson)
     //square's gson
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation (libs.converter.gson)
     //coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
     implementation (libs.logging.interceptor)
     testImplementation(libs.junit)
+    //room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.paging)
+    ksp(libs.androidx.room.compiler)
+    //paging
+    implementation(libs.androidx.paging.runtime)
     //charts
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation (libs.mpandroidchart)
     //swipe to refresh
-    implementation("com.google.accompanist:accompanist-swiperefresh:0.33.2-alpha")
+    implementation(libs.accompanist.swiperefresh)
     //tests for flows
 //    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 //    testImplementation("app.cash.turbine:turbine:1.0.0")
-    testImplementation ("io.mockk:mockk:1.14.0")
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
-    testImplementation("app.cash.turbine:turbine:1.2.0")
+    testImplementation (libs.mockk)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

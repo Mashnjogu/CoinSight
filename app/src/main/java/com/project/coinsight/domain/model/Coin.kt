@@ -21,5 +21,5 @@ data class Coin(
     val circulatingSupply: Double,
     val totalSupply: Double?,
     val maxSupply: Double?,
-    val lastUpdated: String
+    val lastUpdated: String?
 ) : Parcelable
