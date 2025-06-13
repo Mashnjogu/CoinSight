@@ -76,12 +76,6 @@ fun CoinListScreen(
         isConnected = context.isNetworkAvailable()
     }
 
-//    LaunchedEffect(Unit) {
-//        if (context.isNetworkAvailable() && state.coins.isEmpty()) {
-//            coinListViewModel.loadCoins()
-//        }
-//    }
-
     Log.d("CoinListScreen", "The coins list is of size ${state.coins.size}")
 
     Box(modifier = Modifier.fillMaxSize()){
@@ -158,10 +152,6 @@ fun CoinListScreen(
                         CoinListItem(coin = coin, onItemClick = onNavigateToCoinDetails)
                     }
                 }
-
-//                if(state.isLoading) {
-//                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-//                }
                 state.error?.takeIf { it.isNotBlank() }?.let {
                     Text(
                         text = state.error,
@@ -177,9 +167,6 @@ fun CoinListScreen(
 
 
         }
-//        if ((query.value.isNotEmpty() && searchState.isLoading) || (query.value.isEmpty() && state.isLoading)) {
-//            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-//        }
         if (isInitialLoading || isSearchInitialLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
