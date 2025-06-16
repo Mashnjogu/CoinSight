@@ -32,7 +32,6 @@ import com.project.coinsight.presentation.ui.charts.CoinLineChart
 @Composable
 fun CoinDetailScreen(
     coinId: String,
-    onNavigateToCoinDetails: (String) -> Unit
 ){
     val coinDetailViewModel = hiltViewModel<CoinDetailViewModel>()
     val state = coinDetailViewModel.uiState.collectAsState().value

@@ -7,6 +7,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -97,13 +98,13 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     //paging
     implementation(libs.androidx.paging.runtime)
+    //serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     //charts
     implementation (libs.mpandroidchart)
     //swipe to refresh
     implementation(libs.accompanist.swiperefresh)
     //tests for flows
-//    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
-//    testImplementation("app.cash.turbine:turbine:1.0.0")
     testImplementation (libs.mockk)
     testImplementation (libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
